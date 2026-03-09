@@ -25,3 +25,5 @@ tqdm>=4.65.0
 # De-identification (optional, for intake pipeline)
 opencv-python>=4.8.0
 deepface>=0.0.79
+
+mutagen=1.47.0

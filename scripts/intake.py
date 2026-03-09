@@ -1,79 +1,105 @@
 """
-intake.py — Run this when a vendor submits data
-Usage: python intake.py --vendor VisionLabs --input ./incoming/VisionLabs
+intake.py - Process vendor videos and generate metadata
+Usage: python intake.py --vendor Bellu --input ./incoming/Bellu --country India --device GoPro
+
+Install: pip install mutagen
 """
 
 import os
 import csv
 import uuid
 import shutil
-import subprocess
 import argparse
 from datetime import datetime
 
 
-def get_video_info(path):
-    """Extract duration, resolution, fps using ffprobe."""
+def get_duration(path):
+    """Get video duration in seconds using mutagen - reads header only, very fast."""
     try:
-        import json
-        result = subprocess.run([
-            "ffprobe", "-v", "error",
-            "-show_entries", "format=duration:stream=width,height,r_frame_rate",
-            "-of", "json", path
-        ], capture_output=True, text=True)
-        info      = json.loads(result.stdout)
-        duration  = float(info["format"]["duration"])
-        stream    = info["streams"][0]
-        width     = stream.get("width", 0)
-        height    = stream.get("height", 0)
-        fps_raw   = stream.get("r_frame_rate", "30/1")
-        fps       = round(eval(fps_raw), 2)
-        return round(duration, 2), f"{width}x{height}", int(fps)
+        from mutagen.mp4 import MP4
+        audio = MP4(path)
+        return round(audio.info.length, 2)
     except:
-        return None, None, None
+        return None
 
 
-def intake(vendor, input_dir, output_dir, metadata_csv, vendor_csv, country, device):
+def intake(vendor, input_dir, country, device):
+
+    output_dir   = f"./videos/vendor_{vendor}"
+    metadata_csv = "./metadata/global_metadata.csv"
+    vendor_csv   = f"./metadata/{vendor}_metadata.csv"
+
     os.makedirs(output_dir, exist_ok=True)
+    os.makedirs("./metadata", exist_ok=True)
 
-    # Load existing metadata
-    existing_uids = set()
-    meta_rows     = []
-    meta_fields   = [
+    meta_fields = [
         "video_uid", "vendor", "original_filename",
-        "country", "device", "fps", "resolution",
-        "duration_sec", "coarse_task", "fine_task",
-        "intake_date", "deidentified", "validated",
-        "split", "license", "file_name"
+        "country", "device", "duration_sec",
+        "coarse_task", "fine_task",
+        "intake_date", "license", "file_name"
     ]
+
+    # Load existing global metadata to avoid duplicates
+    meta_rows = []
+    existing  = set()
 
     if os.path.exists(metadata_csv):
         with open(metadata_csv) as f:
-            reader = csv.DictReader(f)
+            reader    = csv.DictReader(f)
             meta_rows = list(reader)
-            existing_uids = {r["video_uid"] for r in meta_rows}
+            existing  = {r["original_filename"] for r in meta_rows}
 
-    # Find incoming videos
+    # Check if vendor included their own metadata.csv
+    vendor_meta_path = os.path.join(input_dir, "metadata.csv")
+    vendor_meta      = {}
+
+    if os.path.exists(vendor_meta_path):
+        print("Vendor metadata.csv found - reading tasks from it")
+        with open(vendor_meta_path) as f:
+            for row in csv.DictReader(f):
+                vendor_meta[row["original_filename"]] = row
+    else:
+        print("No vendor metadata.csv found - tasks will be blank, fill manually after")
+
+    # Find all videos
     raw_videos = sorted([
         f for f in os.listdir(input_dir)
-        if f.lower().endswith((".mp4", ".mov", ".avi"))
+        if f.lower().endswith((".mp4", ".mov", ".avi", ".mkv"))
     ])
 
-    print(f"\n🎬 Found {len(raw_videos)} videos from {vendor}")
-    print(f"📁 Output: {output_dir}\n")
+    if not raw_videos:
+        print(f"No videos found in {input_dir}")
+        return
+
+    print(f"Found {len(raw_videos)} videos from {vendor}")
+    print(f"Output folder: {output_dir}\n")
 
     new_rows  = []
     total_sec = 0
 
-    for original in raw_videos:
+    for i, original in enumerate(raw_videos, 1):
+
+        # Skip already processed
+        if original in existing:
+            print(f"  Skipping {original} - already processed")
+            continue
+
         src      = os.path.join(input_dir, original)
         vid_uuid = str(uuid.uuid4())
         new_name = f"{vid_uuid}.mp4"
         dst      = os.path.join(output_dir, new_name)
         hf_path  = f"videos/vendor_{vendor}/{new_name}"
 
-        duration, resolution, fps = get_video_info(src)
+        duration   = get_duration(src)
         total_sec += duration or 0
+
+        # Get task from vendor metadata if available
+        if original in vendor_meta:
+            coarse = vendor_meta[original].get("coarse_task", "")
+            fine   = vendor_meta[original].get("fine_task", "")
+        else:
+            coarse = ""
+            fine   = ""
 
         shutil.copy2(src, dst)
 
@@ -83,22 +109,17 @@ def intake(vendor, input_dir, output_dir, metadata_csv, vendor_csv, country, dev
             "original_filename": original,
             "country":           country,
             "device":            device,
-            "fps":               fps or "",
-            "resolution":        resolution or "",
             "duration_sec":      duration or "",
-            "coarse_task":       "",          # fill later
-            "fine_task":         "",          # fill later
+            "coarse_task":       coarse,
+            "fine_task":         fine,
             "intake_date":       datetime.today().strftime("%Y-%m-%d"),
-            "deidentified":      "no",        # update after de-id
-            "validated":         "no",        # update after validation
-            "split":             "train",
             "license":           "CC-BY-4.0",
             "file_name":         hf_path
         })
 
-        print(f"  ✓ {original} → {vid_uuid[:8]}...")
+        print(f"  [{i}/{len(raw_videos)}] {original} -> {vid_uuid[:8]}... ({duration}s)")
 
-    # Write metadata
+    # Write global metadata
     all_rows = meta_rows + new_rows
     with open(metadata_csv, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=meta_fields)
@@ -106,41 +127,42 @@ def intake(vendor, input_dir, output_dir, metadata_csv, vendor_csv, country, dev
         writer.writerows(all_rows)
 
     # Write vendor metadata
-    vendor_csv_path = vendor_csv.replace("VENDOR", vendor)
-    with open(vendor_csv_path, "w", newline="") as f:
+    vendor_rows = [r for r in all_rows if r["vendor"] == vendor]
+    with open(vendor_csv, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=meta_fields)
         writer.writeheader()
-        writer.writerows([r for r in all_rows if r["vendor"] == vendor])
+        writer.writerows(vendor_rows)
 
-    total_hrs = total_sec / 3600
-    print(f"\n✅ Intake complete")
-    print(f"   Videos  : {len(new_rows)}")
-    print(f"   Hours   : {total_hrs:.1f}")
-    print(f"\n⚠️  Next step: run deidentify.py on {output_dir}")
-    print(f"   Then:      run validate.py --vendor {vendor}")
-    print(f"   Then:      run upload.sh {vendor}")
+    # Summary
+    total_hrs   = total_sec / 3600
+    blank_tasks = [r for r in new_rows if r["coarse_task"] == ""]
+
+    print(f"\nIntake complete - {vendor}")
+    print(f"  Videos processed : {len(new_rows)}")
+    print(f"  Total hours      : {total_hrs:.1f}")
+    print(f"  Global metadata  : {metadata_csv}")
+    print(f"  Vendor metadata  : {vendor_csv}")
+
+    if blank_tasks:
+        print(f"\n  {len(blank_tasks)} videos have blank tasks.")
+        print(f"  Open {vendor_csv} and fill coarse_task and fine_task columns.")
+
+    print(f"\nNext steps:")
+    print(f"  1. Fill blank tasks in {vendor_csv}")
+    print(f"  2. Run: python upload.py --vendor {vendor}")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Karma-Ego vendor intake")
-    parser.add_argument("--vendor",   required=True, help="Vendor name e.g. VisionLabs")
-    parser.add_argument("--input",    required=True, help="Input folder with vendor videos")
-    parser.add_argument("--output",   default="./videos", help="Output video folder")
-    parser.add_argument("--metadata", default="./metadata/global_metadata.csv")
-    parser.add_argument("--vendor-csv", default="./metadata/VENDOR_metadata.csv")
-    parser.add_argument("--country",  default="Unknown")
-    parser.add_argument("--device",   default="Unknown")
+    parser.add_argument("--vendor",  required=True, help="Vendor name e.g. Bellu")
+    parser.add_argument("--input",   required=True, help="Folder with vendor videos")
+    parser.add_argument("--country", default="Unknown", help="Country e.g. India")
+    parser.add_argument("--device",  default="Unknown", help="Device e.g. GoPro Hero 11")
     args = parser.parse_args()
 
-    os.makedirs("./metadata", exist_ok=True)
-    os.makedirs(f"./videos/vendor_{args.vendor}", exist_ok=True)
-
     intake(
-        vendor       = args.vendor,
-        input_dir    = args.input,
-        output_dir   = f"./videos/vendor_{args.vendor}",
-        metadata_csv = args.metadata,
-        vendor_csv   = args.vendor_csv,
-        country      = args.country,
-        device       = args.device
+        vendor    = args.vendor,
+        input_dir = args.input,
+        country   = args.country,
+        device    = args.device
     )
