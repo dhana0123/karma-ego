@@ -1,0 +1,27 @@
+# Karma-Ego Requirements
+# Install: pip install -r requirements.txt
+
+# Core
+huggingface_hub>=0.32.0
+datasets>=2.14.0
+
+# Fast uploads/downloads (Rust-based, highly recommended)
+hf_transfer>=0.1.4
+
+# Xet chunked deduplication (for large video uploads)
+hf_xet
+
+# Video processing (for intake pipeline)
+ffmpeg-python>=0.2.0
+
+# Data processing
+pandas>=1.5.0
+pyarrow>=12.0.0
+
+# CLI
+argparse
+tqdm>=4.65.0
+
+# De-identification (optional, for intake pipeline)
+opencv-python>=4.8.0
+deepface>=0.0.79
