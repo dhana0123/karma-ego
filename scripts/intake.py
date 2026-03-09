@@ -27,7 +27,6 @@ def intake(vendor, input_dir, country, device):
 
     output_dir   = f"./videos/vendor_{vendor}"
     metadata_csv = "./metadata/global_metadata.csv"
-    vendor_csv   = f"./metadata/{vendor}_metadata.csv"
 
     os.makedirs(output_dir, exist_ok=True)
     os.makedirs("./metadata", exist_ok=True)
@@ -126,13 +125,6 @@ def intake(vendor, input_dir, country, device):
         writer.writeheader()
         writer.writerows(all_rows)
 
-    # Write vendor metadata
-    vendor_rows = [r for r in all_rows if r["vendor"] == vendor]
-    with open(vendor_csv, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=meta_fields)
-        writer.writeheader()
-        writer.writerows(vendor_rows)
-
     # Summary
     total_hrs   = total_sec / 3600
     blank_tasks = [r for r in new_rows if r["coarse_task"] == ""]
@@ -140,15 +132,14 @@ def intake(vendor, input_dir, country, device):
     print(f"\nIntake complete - {vendor}")
     print(f"  Videos processed : {len(new_rows)}")
     print(f"  Total hours      : {total_hrs:.1f}")
-    print(f"  Global metadata  : {metadata_csv}")
-    print(f"  Vendor metadata  : {vendor_csv}")
+    print(f"  Metadata         : {metadata_csv}")
 
     if blank_tasks:
         print(f"\n  {len(blank_tasks)} videos have blank tasks.")
-        print(f"  Open {vendor_csv} and fill coarse_task and fine_task columns.")
+        print(f"  Open {metadata_csv} and fill coarse_task and fine_task columns.")
 
     print(f"\nNext steps:")
-    print(f"  1. Fill blank tasks in {vendor_csv}")
+    print(f"  1. Fill blank tasks in {metadata_csv}")
     print(f"  2. Run: python upload.py --vendor {vendor}")
 
 

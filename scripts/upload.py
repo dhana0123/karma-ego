@@ -15,10 +15,8 @@ def upload_vendor(vendor, tag=None):
     api = HfApi()
     os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
 
-    video_dir      = f"./videos/vendor_{vendor}"
-    vendor_meta    = f"./metadata/{vendor}_metadata.csv"
-    global_meta    = f"./metadata/global_metadata.csv"
-    vendor_catalog = f"./metadata/vendor_catalog.csv"
+    video_dir    = f"./videos/vendor_{vendor}"
+    global_meta  = "./metadata/global_metadata.csv"
 
     print(f"Uploading vendor: {vendor}")
     print(f"Repo: {REPO_ID}\n")
@@ -28,12 +26,8 @@ def upload_vendor(vendor, tag=None):
         print(f"Error: {video_dir} not found. Run intake.py first.")
         return
 
-    if not os.path.exists(vendor_meta):
-        print(f"Error: {vendor_meta} not found. Run intake.py first.")
-        return
-
     if not os.path.exists(global_meta):
-        print(f"Error: {global_meta} not found.")
+        print(f"Error: {global_meta} not found. Run intake.py first.")
         return
 
     # Show what will be uploaded
@@ -53,36 +47,22 @@ def upload_vendor(vendor, tag=None):
         return
 
     # Upload videos
-    print("\nStep 1/4 - Uploading videos...")
+    print("\nStep 1/2 - Uploading videos...")
     try:
         api.upload_folder(
             folder_path=video_dir,
             path_in_repo=f"videos/vendor_{vendor}",
             repo_id=REPO_ID,
             repo_type="dataset",
-            commit_message=f"Add vendor {vendor} videos"
+            commit_message=f"Add vendor {vendor} videos",
         )
         print("Videos uploaded.\n")
     except Exception as e:
         print(f"Video upload failed: {e}")
         return
 
-    # Upload vendor metadata
-    print("Step 2/4 - Uploading vendor metadata...")
-    try:
-        api.upload_file(
-            path_or_fileobj=vendor_meta,
-            path_in_repo=f"metadata/{vendor}_metadata.csv",
-            repo_id=REPO_ID,
-            repo_type="dataset",
-            commit_message=f"Add {vendor} metadata"
-        )
-        print("Vendor metadata uploaded.\n")
-    except Exception as e:
-        print(f"Vendor metadata failed: {e}")
-
     # Upload global metadata
-    print("Step 3/4 - Uploading global metadata...")
+    print("Step 2/2 - Uploading global metadata...")
     try:
         api.upload_file(
             path_or_fileobj=global_meta,
@@ -94,21 +74,6 @@ def upload_vendor(vendor, tag=None):
         print("Global metadata uploaded.\n")
     except Exception as e:
         print(f"Global metadata failed: {e}")
-
-    # Upload vendor catalog
-    if os.path.exists(vendor_catalog):
-        print("Step 4/4 - Uploading vendor catalog...")
-        try:
-            api.upload_file(
-                path_or_fileobj=vendor_catalog,
-                path_in_repo="metadata/vendor_catalog.csv",
-                repo_id=REPO_ID,
-                repo_type="dataset",
-                commit_message=f"Update vendor catalog for {vendor}"
-            )
-            print("Vendor catalog uploaded.\n")
-        except Exception as e:
-            print(f"Vendor catalog failed: {e}")
 
     print(f"Upload complete.")
     print(f"https://huggingface.co/datasets/{REPO_ID}\n")

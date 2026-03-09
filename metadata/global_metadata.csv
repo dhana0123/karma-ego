@@ -1,3 +1,23 @@
 video_uid,vendor,original_filename,country,device,duration_sec,coarse_task,fine_task,intake_date,license,file_name
-333b893e-90c7-401d-beb8-2b656bf88aec,bellu,changing_bed_lines_dawn.mp4,india,wide-angle-mobile-camera,405.78,bedroom,changing bed ines,2026-03-09,CC-BY-4.0,videos/vendor_bellu/333b893e-90c7-401d-beb8-2b656bf88aec.mp4
-6d3571ef-c04a-4270-8c59-4020f0d6f3de,bellu,cleaning_small_appliance.mp4,india,wide-angle-mobile-camera,286.27,kitchen,cleaning small appliance,2026-03-09,CC-BY-4.0,videos/vendor_bellu/6d3571ef-c04a-4270-8c59-4020f0d6f3de.mp4
+5267c09a-ac6e-4c21-bcc4-3285599a37dc,bellu,changing_bed_lines_dawn.mp4,india,wide-angle-mobile-camera,405.78,cleaning,changing bed lines,2026-03-09,CC-BY-4.0,videos/vendor_bellu/5267c09a-ac6e-4c21-bcc4-3285599a37dc.mp4
+5d870c90-8e17-4450-bc83-c66c8ce03084,bellu,cleaning_small_appliance.mp4,india,wide-angle-mobile-camera,286.27,cleaning,cleaning small appliance,2026-03-09,CC-BY-4.0,videos/vendor_bellu/5d870c90-8e17-4450-bc83-c66c8ce03084.mp4
+012703f9-1537-4054-93b1-93a59c6c55b6,bellu,Ironing_clothes_daytime.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/012703f9-1537-4054-93b1-93a59c6c55b6.mp4
+0daeddd6-249f-4fc2-8ea7-d16e6c7f14e3,bellu,cutting_vegetables.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/0daeddd6-249f-4fc2-8ea7-d16e6c7f14e3.mp4
+3aa5ace0-54ac-479c-926a-f2a0260e8fc6,bellu,folding_and_putting_away_laundry.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/3aa5ace0-54ac-479c-926a-f2a0260e8fc6.mp4
+b3444644-3167-4329-8bdf-70383db2624c,bellu,folding_and_putting_away_laundry_1.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/b3444644-3167-4329-8bdf-70383db2624c.mp4
+358ca05b-8d65-47d6-9ed0-a920505e1af4,bellu,folding_and_putting_away_laundry_2.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/358ca05b-8d65-47d6-9ed0-a920505e1af4.mp4
+8c24f7d4-9c47-4bcb-950d-be04ac2f98d4,bellu,folding_and_putting_away_laundry_3.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/8c24f7d4-9c47-4bcb-950d-be04ac2f98d4.mp4
+d610485e-46d8-42f7-903a-d573b9d3aa97,bellu,folding_and_putting_away_laundry_dawn.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/d610485e-46d8-42f7-903a-d573b9d3aa97.mp4
+a26dfd74-2b38-4938-8ff7-3903912dfd1e,bellu,making meals_rottie_curry 1.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/a26dfd74-2b38-4938-8ff7-3903912dfd1e.mp4
+d6baa706-4f59-4225-9c94-0d81810f9281,bellu,making_beds.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/d6baa706-4f59-4225-9c94-0d81810f9281.mp4
+30fadb86-ca6a-402f-a6dd-2e43f4345e0c,bellu,making_beds_1.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/30fadb86-ca6a-402f-a6dd-2e43f4345e0c.mp4
+4399a058-e165-4599-a208-bed7f94824b8,bellu,making_beds_artifical_light.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/4399a058-e165-4599-a208-bed7f94824b8.mp4
+59b22681-0592-4f4f-8eda-3b582a779ac5,bellu,organizing_clutter.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/59b22681-0592-4f4f-8eda-3b582a779ac5.mp4
+8eee6d8f-0a9c-47f3-a317-efe375b9146d,bellu,polishing_shoes.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/8eee6d8f-0a9c-47f3-a317-efe375b9146d.mp4
+ffa86671-442a-4dd9-bc05-2b24164196df,bellu,sharpening_knifes.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/ffa86671-442a-4dd9-bc05-2b24164196df.mp4
+444f6f8b-fbfd-476f-a578-21bedc17c2f3,bellu,sweeping_floors.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/444f6f8b-fbfd-476f-a578-21bedc17c2f3.mp4
+cca279b5-466f-4292-901b-9d296d23772c,bellu,sweeping_floors_1.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/cca279b5-466f-4292-901b-9d296d23772c.mp4
+80452fed-91b2-464b-8625-dd4ce42087ba,bellu,washing_clothes_in_washing_machine.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/80452fed-91b2-464b-8625-dd4ce42087ba.mp4
+48307627-bb09-4b95-a5f5-21e5a0864323,bellu,washing_dishes.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/48307627-bb09-4b95-a5f5-21e5a0864323.mp4
+1a2550cb-fbe7-429f-97fd-730dd5a71882,bellu,washing_dishes_1.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/1a2550cb-fbe7-429f-97fd-730dd5a71882.mp4
+60c9ba09-f5ea-43e6-bd97-a69c828ad1d0,bellu,washing_dishes_dawn.mp4,India,mobile-wide-angle-camera,,,,2026-03-09,CC-BY-4.0,videos/vendor_bellu/60c9ba09-f5ea-43e6-bd97-a69c828ad1d0.mp4
