@@ -128,9 +128,14 @@ publisher: https://your-publisher-url.com
 - [ ] `karmaego validate` — validate YAML before PR submission
 - [ ] `karmaego export` — export results as JSON / CSV
 - [ ] `karmaego suggest` — dataset suggestions from free-text task description
+- [ ] `karmaego compare` — side-by-side dataset comparison by schema fields
 - [ ] Aggregate datasets from research papers, academic labs, and platforms
+- [ ] Dataset detail pages on karma-ego.org with canonical URLs
 - [ ] REST API for programmatic access
 - [ ] BibTeX citation export per dataset
+- [ ] Maintainer dashboard — track listing views and access requests
+- [ ] Dataset freshness tracking — flag stale or broken access links
+- [ ] Weekly digest — new datasets added to the registry
 
 ---
 
