@@ -1,0 +1,13 @@
+name: Bellu AI Indian Home Chores Dataset
+institution: Bellu AI Technologies
+dataset_page: https://belluai.com
+volume_hours: 20000
+modalities: [rgb]
+license: CC BY 4.0
+paper_url: null
+access_url: https://huggingface.co/datasets/Karma-ego/global
+contact: +91 6309583248
+country: India
+task_type: [home chores, daily activities]
+data_type: egocentric video
+publisher: https://huggingface.co/Karma-ego
