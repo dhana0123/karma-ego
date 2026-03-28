@@ -1,0 +1,13 @@
+name: MECCANO Multimodal Egocentric Dataset
+institution: University of Catania / Next Vision
+dataset_page: https://iplab.dmi.unict.it/MECCANO/
+volume_hours: unknown
+modalities: [rgb, depth, gaze]
+license: Academic use
+paper_url: https://doi.org/10.1016/j.cviu.2023.103764
+access_url: https://iplab.dmi.unict.it/MECCANO/
+contact: furnari@dmi.unict.it
+country: [Italy, United Kingdom]
+task_type: [action recognition, object detection, human-object interaction, gaze estimation, action anticipation, next-active object detection, procedural learning]
+data_type: egocentric video
+publisher: https://iplab.dmi.unict.it/
