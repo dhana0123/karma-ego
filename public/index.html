@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Karma-Ego — Open Egocentric Data Registry</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #ffffff;
+        --surface: #f7f7f5;
+        --border: #e4e4e0;
+        --border-dark: #c8c8c2;
+        --text: #111110;
+        --muted: #6b6b66;
+        --dim: #a8a8a2;
+        --accent: #1a1a1a;
+        --mono: "JetBrains Mono", monospace;
+        --serif: "EB Garamond", Georgia, serif;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--serif);
+        font-size: 18px;
+        line-height: 1.75;
+      }
+
+      /* NAV */
+      nav {
+        border-bottom: 1px solid var(--border);
+        padding: 1.1rem 0;
+        position: sticky;
+        top: 0;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(8px);
+        z-index: 100;
+      }
+      nav .inner {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-logo {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--text);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+      }
+      .nav-github {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-decoration: none;
+        letter-spacing: 0.06em;
+        border: 1px solid var(--border-dark);
+        padding: 0.35rem 0.9rem;
+        transition: all 0.15s;
+      }
+      .nav-github:hover {
+        background: var(--text);
+        color: var(--bg);
+        border-color: var(--text);
+      }
+
+      /* LAYOUT */
+      .container {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      /* HERO */
+      .hero {
+        padding: 6rem 0 5rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .eyebrow {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        color: var(--dim);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 1.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        animation: up 0.6s ease both;
+      }
+      .eyebrow::before {
+        content: "";
+        display: inline-block;
+        width: 24px;
+        height: 1px;
+        background: var(--border-dark);
+      }
+      h1 {
+        font-family: var(--serif);
+        font-size: clamp(2.6rem, 5.5vw, 4rem);
+        font-weight: 400;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-bottom: 1.8rem;
+        animation: up 0.6s 0.08s ease both;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--muted);
+      }
+      .hero-p {
+        font-size: 1.05rem;
+        color: var(--muted);
+        max-width: 560px;
+        line-height: 1.85;
+        margin-bottom: 2.8rem;
+        animation: up 0.6s 0.16s ease both;
+      }
+      .hero-cta {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        animation: up 0.6s 0.22s ease both;
+      }
+      .btn-main {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.8rem 1.8rem;
+        background: var(--text);
+        color: var(--bg);
+        text-decoration: none;
+        display: inline-block;
+        transition: opacity 0.15s;
+      }
+      .btn-main:hover {
+        opacity: 0.7;
+      }
+      .link-sec {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 1px;
+        transition: color 0.15s, border-color 0.15s;
+      }
+      .link-sec:hover {
+        color: var(--text);
+        border-color: var(--muted);
+      }
+
+      /* STATS */
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        padding: 3rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .stat {
+        padding-right: 2.5rem;
+        border-right: 1px solid var(--border);
+        margin-right: 2.5rem;
+      }
+      .stat:last-child {
+        border-right: none;
+        margin-right: 0;
+        padding-right: 0;
+      }
+      .stat-num {
+        font-family: var(--serif);
+        font-size: 2.6rem;
+        font-weight: 400;
+        color: var(--text);
+        display: block;
+        line-height: 1;
+        margin-bottom: 0.3rem;
+        letter-spacing: -0.02em;
+      }
+      .stat-label {
+        font-family: var(--mono);
+        font-size: 0.63rem;
+        color: var(--dim);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      /* SECTION */
+      .section {
+        padding: 4.5rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .sec-label {
+        font-family: var(--mono);
+        font-size: 0.63rem;
+        color: var(--dim);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 2.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      .sec-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+      h2 {
+        font-family: var(--serif);
+        font-size: 2rem;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        margin-bottom: 1rem;
+      }
+      .sec-p {
+        font-size: 1rem;
+        color: var(--muted);
+        max-width: 560px;
+        margin-bottom: 2.5rem;
+        line-height: 1.85;
+      }
+
+      /* STEPS */
+      .steps {
+        border-top: 1px solid var(--border);
+      }
+      .step {
+        display: grid;
+        grid-template-columns: 3rem 1fr;
+        border-bottom: 1px solid var(--border);
+        padding: 1.8rem 0;
+        gap: 1.5rem;
+        align-items: start;
+      }
+      .step-n {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        color: var(--dim);
+        padding-top: 0.2rem;
+        letter-spacing: 0.05em;
+      }
+      .step-title {
+        font-family: var(--serif);
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--text);
+        margin-bottom: 0.2rem;
+      }
+      .step-desc {
+        font-size: 0.92rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      /* CONTRIBUTE */
+      .contrib {
+        border: 1px solid var(--border);
+        padding: 2.5rem;
+        margin-top: 2rem;
+        background: var(--surface);
+      }
+      .contrib h3 {
+        font-family: var(--serif);
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+      }
+      .contrib p {
+        font-size: 0.92rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+      .code {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        padding: 1.2rem 1.5rem;
+        font-family: var(--mono);
+        font-size: 0.74rem;
+        color: #3a3a38;
+        line-height: 2;
+        margin-bottom: 1.5rem;
+        overflow-x: auto;
+      }
+      .ck {
+        color: var(--dim);
+      }
+
+      /* PARTNERS SECTION */
+      .partners-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+      .partner-card {
+        border: 1px solid var(--border);
+        padding: 2rem 2.5rem;
+        background: var(--bg);
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 1.5rem 2rem;
+        align-items: center;
+        transition: border-color 0.2s;
+      }
+      .partner-card:hover {
+        border-color: var(--border-dark);
+      }
+      .partner-logo-wrap {
+        width: 48px;
+        height: 48px;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--surface);
+        flex-shrink: 0;
+      }
+      .partner-logo-letter {
+        font-family: var(--mono);
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--text);
+      }
+      .partner-info {
+      }
+      .partner-name {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text);
+        margin-bottom: 0.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+      }
+      .partner-badge {
+        font-family: var(--mono);
+        font-size: 0.55rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        border: 1px solid var(--border-dark);
+        padding: 0.15rem 0.55rem;
+        color: var(--dim);
+      }
+      .partner-badge.founding {
+        border-color: var(--text);
+        color: var(--text);
+        background: #f0f0ec;
+      }
+      .partner-desc {
+        font-size: 0.9rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .partner-link {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        text-decoration: none;
+        border: 1px solid var(--border);
+        padding: 0.4rem 0.9rem;
+        white-space: nowrap;
+        transition: all 0.15s;
+        align-self: center;
+      }
+      .partner-link:hover {
+        background: var(--text);
+        color: var(--bg);
+        border-color: var(--text);
+      }
+      .join-partner {
+        border: 1px dashed var(--border-dark);
+        padding: 1.8rem 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        background: var(--surface);
+      }
+      .join-partner-text h4 {
+        font-family: var(--serif);
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin-bottom: 0.2rem;
+      }
+      .join-partner-text p {
+        font-size: 0.88rem;
+        color: var(--muted);
+      }
+
+      /* ABOUT */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem 3rem;
+        margin-top: 2rem;
+      }
+      .about-item h4 {
+        font-family: var(--mono);
+        font-size: 0.63rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--dim);
+        margin-bottom: 0.5rem;
+      }
+      .about-item p {
+        font-size: 0.95rem;
+        color: var(--muted);
+        line-height: 1.75;
+      }
+
+      /* FOOTER */
+      footer {
+        padding: 2.5rem 0;
+      }
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .f-left {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        color: var(--dim);
+        letter-spacing: 0.05em;
+        line-height: 1.9;
+      }
+      .f-right {
+        font-family: var(--mono);
+        font-size: 0.63rem;
+        color: var(--dim);
+        letter-spacing: 0.04em;
+        line-height: 1.9;
+        text-align: right;
+      }
+
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 2.2rem;
+        }
+        .stats {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+        .stat {
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+          padding: 1.5rem 0;
+          margin-right: 0;
+        }
+        .stat:last-child {
+          border-bottom: none;
+        }
+        .about-grid {
+          grid-template-columns: 1fr;
+        }
+        .contrib {
+          padding: 1.5rem;
+        }
+        .f-right {
+          text-align: left;
+        }
+        .partner-card {
+          grid-template-columns: auto 1fr;
+        }
+        .partner-link {
+          grid-column: 1 / -1;
+          width: fit-content;
+        }
+        .join-partner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+  <div class="inner">
+    <a class="nav-logo" href="https://belluai.com">Karma-Ego</a>
+    <a class="nav-github" href="https://github.com/dhana0123/karma-ego/" target="_blank">
+      GitHub ↗
+    </a>
+    <a class="nav-hf" href="https://huggingface.co/datasets/Karma-ego/global" target="_blank">
+      Dataset ↗
+    </a>
+  </div>
+</nav>
+
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">Open Source · Physical AI · India Initiative</div>
+        <h1>The open registry for<br /><em>egocentric video data</em></h1>
+        <p class="hero-p">
+          Karma-Ego is a unified, community-maintained index of egocentric and
+          first-person video datasets for physical AI research. Discover what
+          data exists, who maintains it, and how to access it — in one place.
+        </p>
+        <div class="hero-cta">
+          <a href="#contribute" class="btn-main">Contribute a Dataset</a>
+          <a href="#how" class="link-sec">How it works →</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-num">24+</span>
+          <span class="stat-label">Datasets Indexed</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">10k+</span>
+          <span class="stat-label">Hours of Video</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">Open</span>
+          <span class="stat-label">Always Free</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="section" id="how">
+      <div class="container">
+        <div class="sec-label">How it works</div>
+        <h2>Discovery, not hosting</h2>
+        <p class="sec-p">
+          Karma-Ego does not host or redistribute any dataset. We maintain
+          structured metadata so researchers and engineers can find the right
+          data and contact maintainers directly.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-n">01</div>
+            <div>
+              <div class="step-title">Search the registry</div>
+              <p class="step-desc">
+                Filter datasets by task type, sensor modality, volume, license,
+                or institution.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">02</div>
+            <div>
+              <div class="step-title">Review structured metadata</div>
+              <p class="step-desc">
+                Each entry includes format specs, annotation details, paper
+                citation, and access instructions.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">03</div>
+            <div>
+              <div class="step-title">Contact maintainers directly</div>
+              <p class="step-desc">
+                Every listing links to the original project page and maintainer
+                contact. No middleman, no friction.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">04</div>
+            <div>
+              <div class="step-title">Contribute via pull request</div>
+              <p class="step-desc">
+                Add a dataset by submitting a structured YAML entry to our
+                GitHub repository.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTNERS SECTION — NEW -->
+    <section class="section" id="partners">
+      <div class="container">
+        <div class="sec-label">Project Partners</div>
+        <h2>Who's building with us</h2>
+        <p class="sec-p">
+          Karma-Ego is open infrastructure. These organizations contribute
+          datasets, research capacity, and real-world deployment context to the
+          registry.
+        </p>
+        <div class="partners-grid">
+          <!-- Bellu AI -->
+          <div class="partner-card">
+            <div class="partner-logo-wrap">
+              <span class="partner-logo-letter">B</span>
+            </div>
+            <div class="partner-info">
+              <div class="partner-name">
+                Bellu AI Technologies
+                <span class="partner-badge founding">Founding Partner</span>
+              </div>
+              <p class="partner-desc">
+                AI-powered staffing platform for blue-collar workers, Bengaluru.
+                Contributing egocentric task and workflow datasets from
+                real-world labor environments across India — a unique source of
+                on-the-ground physical AI training data.
+              </p>
+            </div>
+            <a href="https://bellu.ai" class="partner-link" target="_blank"
+              >bellu.ai ↗</a
+            >
+          </div>
+
+          <!-- Placeholder — inviting next partner -->
+          <div class="join-partner">
+            <div class="join-partner-text">
+              <h4>Your organisation here</h4>
+              <p>
+                Research labs, robotics companies, and dataset maintainers
+                welcome. Listing is always free.
+              </p>
+            </div>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSes23ByxlGWIyVXyOBwQ5We9k5n_qJWl5HpN7yzVr3o-nkLSQ/viewform?usp=publish-editor"
+              class="btn-main"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Become a partner →</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contribute">
+      <div class="container">
+        <div class="sec-label">Contribute</div>
+        <h2>Add your dataset</h2>
+        <p class="sec-p">
+          If you maintain an egocentric or first-person video dataset, submit a
+          pull request. Listing is free — gain visibility with researchers and
+          robotics companies actively building physical AI systems.
+        </p>
+        <div class="contrib">
+          <h3>Entry format</h3>
+          <p>
+            Each dataset is a YAML file in
+            <code style="font-family: var(--mono); font-size: 0.8rem"
+              >/registry/datasets/</code
+            >
+          </p>
+          <div class="code">
+            <span class="ck">name</span>: Your Dataset Name
+            <span class="ck">institution</span>: University / Research Lab
+            <span class="ck">volume_hours</span>: 120
+            <span class="ck">modalities</span>: [rgb, depth, imu, gaze]
+            <span class="ck">license</span>: CC BY 4.0
+            <span class="ck">paper_url</span>: https://arxiv.org/abs/xxxx.xxxxx
+            <span class="ck">access_url</span>: https://your-dataset-page.com
+            <span class="ck">contact</span>: maintainer@institution.edu
+          </div>
+          <a href="https://github.com" class="btn-main" target="_blank"
+            >Submit on GitHub →</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="sec-label">About</div>
+        <h2>Why Karma-Ego</h2>
+        <p class="sec-p">
+          The physical AI research community lacks a single structured source of
+          truth for egocentric video data. Karma-Ego is India's contribution to
+          fixing that.
+        </p>
+        <div class="about-grid">
+          <div class="about-item">
+            <h4>The Problem</h4>
+            <p>
+              Robotics researchers spend weeks finding relevant datasets —
+              scattered across lab pages, arXiv, and institutional portals with
+              no common structure.
+            </p>
+          </div>
+          <div class="about-item">
+            <h4>The Solution</h4>
+            <p>
+              A community-maintained open registry. Structured metadata, direct
+              maintainer contacts, and a searchable index — all in one GitHub
+              repository.
+            </p>
+          </div>
+          <div class="about-item">
+            <h4>Open by Design</h4>
+            <p>
+              Karma-Ego is fully open source. No sign-up, no API keys, no
+              paywalls. Fork it, extend it, build on it.
+            </p>
+          </div>
+          <div class="about-item">
+            <h4>India Initiative</h4>
+            <p>
+              Built in Bengaluru as India's contribution to the global physical
+              AI and embodied intelligence research ecosystem.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-inner">
+          <div class="f-left">
+            Karma-Ego · Open Egocentric Data Registry<br />
+            Bellu AI Technologies, Bengaluru, India
+          </div>
+          <div class="f-right">
+            All datasets remain property of their respective maintainers.<br />
+            Not affiliated with Meta, CMU, or any indexed institution.
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
