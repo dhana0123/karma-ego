@@ -1,12 +1,13 @@
 # Karma-Ego
 
-**Open egocentric dataset for physical AI**
+**The open registry for egocentric video data.**
 
-Community-driven, MIT-inspired, free forever.
 
-[![HuggingFace](https://img.shields.io/badge/HuggingFace-karma--ego-yellow)](https://huggingface.co/karma-ego)
-[![License](https://img.shields.io/badge/License-CC--BY--4.0-blue)](https://creativecommons.org/licenses/by/4.0/)
-[![PyPI](https://img.shields.io/badge/pip-karma--ego-green)](https://pypi.org/project/karma-ego)
+Karma-Ego is an open registry and discovery interface for egocentric video datasets. Search, filter, compare, and access first-person video data from labs, platforms, and field deployments worldwide — via CLI or the web. One structured index. Every dataset, one command away.
+
+Community-maintained, open by design, and built for the pace of research.
+
+**[Website](https://karma-ego.org) · [HuggingFace](https://huggingface.co/datasets/karma-ego/global) · [Contribute a Dataset](contributor.md)**
 
 ---
 
@@ -15,6 +16,8 @@ Community-driven, MIT-inspired, free forever.
 ```bash
 pip install karma-ego
 ```
+
+---
 
 ## Quick Start
 
@@ -37,6 +40,8 @@ karmaego download --metadata-only
 # Specific version
 karmaego download --task cooking --version v1.0
 ```
+
+---
 
 ## Python API
 
@@ -65,35 +70,78 @@ karma-ego/
 │   ├── vendor_catalog.csv
 │   ├── VisionLabs_metadata.csv
 │   └── StudioAlpha_metadata.csv
+├── registry/
+│   └── datasets/           # One YAML file per indexed dataset
 └── README.md
 ```
+
+---
 
 ## Metadata Schema
 
 | Column | Description |
 |---|---|
-| video_uid | Unique video ID |
-| vendor | Vendor name |
-| country | Collection country |
-| device | Camera device |
-| fps | Frames per second |
-| resolution | Video resolution |
-| duration_sec | Duration in seconds |
-| coarse_task | Main task category |
-| fine_task | Detailed task description |
-| split | train / val / test |
+| `video_uid` | Unique video ID |
+| `vendor` | Vendor name |
+| `country` | Collection country |
+| `device` | Camera device |
+| `fps` | Frames per second |
+| `resolution` | Video resolution |
+| `duration_sec` | Duration in seconds |
+| `coarse_task` | Main task category |
+| `fine_task` | Detailed task description |
+| `split` | train / val / test |
 
 ---
 
-## Contributing
+## Registry Schema
 
-Vendors: contribute 500hrs of egocentric data to get listed on karma-ego.com
+Each dataset in `/registry/datasets/` follows this YAML structure:
 
-See [CONTRIBUTING.md](CONTRIBUTING.md)
+```yaml
+name: Your Dataset Name
+institution: University / Research Lab / Company
+dataset_page: https://your-dataset-page.com
+volume_hours: 120
+modalities: [rgb, depth, imu, gaze]
+license: CC BY 4.0
+paper_url: https://arxiv.org/abs/xxxx.xxxxx
+access_url: https://your-dataset-page.com
+contact: maintainer@institution.edu
+country: Your Country
+task_type: [task name, activity type]
+data_type: egocentric video
+publisher: https://your-publisher-url.com
+```
+
+---
+
+## Roadmap
+
+- [x] YAML registry schema + GitHub-hosted index
+- [x] CLI: `karmaego download` and `karmaego vendors`
+- [x] HuggingFace dataset (`karma-ego/global`) with Python API
+- [x] Website live at karma-ego.org
+- [x] Standardized metadata schema across all datasets
+- [ ] `karmaego search` — keyword search across registry
+- [ ] `karmaego list` — filter by task type, modality, country, size, license
+- [ ] `karmaego validate` — validate YAML before PR submission
+- [ ] `karmaego export` — export results as JSON / CSV
+- [ ] `karmaego suggest` — dataset suggestions from free-text task description
+- [ ] `karmaego compare` — side-by-side dataset comparison by schema fields
+- [ ] Aggregate datasets from research papers, academic labs, and platforms
+- [ ] Dataset detail pages on karma-ego.org with canonical URLs
+- [ ] REST API for programmatic access
+- [ ] BibTeX citation export per dataset
+- [ ] Maintainer dashboard — track listing views and access requests
+- [ ] Dataset freshness tracking — flag stale or broken access links
+- [ ] Weekly digest — new datasets added to the registry
 
 ---
 
 ## License
 
-Dataset: CC-BY-4.0
-Code: MIT
+- **Code:** MIT  
+- **Dataset:** CC-BY-4.0
+
+All datasets remain property of their respective maintainers. Karma-Ego is not affiliated with Meta, CMU, or any indexed institution.
