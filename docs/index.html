@@ -335,6 +335,59 @@
         color: var(--dim);
       }
 
+      /* FEATURED DATASETS */
+      .featured-datasets-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        margin-top: 2rem;
+      }
+      .dataset-card {
+        border: 1px solid var(--border);
+        padding: 1.5rem 2rem;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        transition: border-color 0.2s;
+      }
+      .dataset-card:hover {
+        border-color: var(--border-dark);
+      }
+      .dataset-info {
+        flex: 1;
+      }
+      .dataset-name {
+        font-family: var(--serif);
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--text);
+        margin-bottom: 0.3rem;
+      }
+      .dataset-meta {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        color: var(--muted);
+        letter-spacing: 0.06em;
+      }
+      .dataset-link {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        text-decoration: none;
+        border: 1px solid var(--border);
+        padding: 0.4rem 0.9rem;
+        white-space: nowrap;
+        transition: all 0.15s;
+      }
+      .dataset-link:hover {
+        background: var(--text);
+        color: var(--bg);
+        border-color: var(--text);
+      }
+
       /* PARTNERS SECTION */
       .partners-grid {
         display: grid;
@@ -547,6 +600,14 @@
         .contrib {
           padding: 1.5rem;
         }
+        .dataset-card {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+        .dataset-link {
+          width: fit-content;
+        }
         .f-right {
           text-align: left;
         }
@@ -586,7 +647,7 @@
 
     <section class="hero">
       <div class="container">
-        <div class="eyebrow">Open Source · Physical AI · India Initiative</div>
+        <div class="eyebrow">Open Source · Physical AI</div>
         <h1>The open registry for<br /><em>egocentric video data</em></h1>
         <p class="hero-p">
           Karma-Ego is a unified, community-maintained index of egocentric and
@@ -671,6 +732,26 @@
       </div>
     </section>
 
+    <!-- FEATURED DATASETS SECTION -->
+    <section class="section" id="datasets">
+      <div class="container">
+        <div class="sec-label">Featured Datasets</div>
+        <h2>Get started with real data</h2>
+        <p class="sec-p">
+          Explore our curated collection of egocentric video datasets available for download and research.
+        </p>
+        <div class="featured-datasets-grid">
+          <div class="dataset-card">
+            <div class="dataset-info">
+              <div class="dataset-name">Bellu AI Indian Home Chores Dataset</div>
+              <div class="dataset-meta">20 hours • RGB • India</div>
+            </div>
+            <a href="https://huggingface.co/datasets/Karma-ego/global" class="dataset-link" target="_blank">View Dataset ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- PARTNERS SECTION — NEW -->
     <section class="section" id="partners">
       <div class="container">
@@ -699,8 +780,8 @@
                 on-the-ground physical AI training data.
               </p>
             </div>
-            <a href="https://bellu.ai" class="partner-link" target="_blank"
-              >bellu.ai ↗</a
+            <a href="https://belluai.com" class="partner-link" target="_blank"
+              >belluai.com ↗</a
             >
           </div>
 
@@ -742,16 +823,19 @@
               >/registry/datasets/</code
             >
           </p>
-          <div class="code">
-            <span class="ck">name</span>: Your Dataset Name
-            <span class="ck">institution</span>: University / Research Lab
-            <span class="ck">volume_hours</span>: 120
-            <span class="ck">modalities</span>: [rgb, depth, imu, gaze]
-            <span class="ck">license</span>: CC BY 4.0
-            <span class="ck">paper_url</span>: https://arxiv.org/abs/xxxx.xxxxx
-            <span class="ck">access_url</span>: https://your-dataset-page.com
-            <span class="ck">contact</span>: maintainer@institution.edu
-          </div>
+          <pre class="code">name: Your Dataset Name
+institution: University / Research Lab / Company
+dataset_page: https://your-dataset-page.com
+volume_hours: 120
+modalities: [rgb, depth, imu, gaze]
+license: CC BY 4.0
+paper_url: https://arxiv.org/abs/xxxx.xxxxx
+access_url: https://your-dataset-page.com
+contact: maintainer@institution.edu
+country: Your Country
+task_type: [task name, activity type]
+data_type: egocentric video
+publisher: https://your-publisher-url.com</pre>
           <a href="https://github.com" class="btn-main" target="_blank"
             >Submit on GitHub →</a
           >
