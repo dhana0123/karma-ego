@@ -1,0 +1,23 @@
+- id: epic-kitchens-100
+  name: EPIC-KITCHENS 100
+  institution: University of Bristol
+  url: https://epic-kitchens.github.io/2022
+  dataset_page: https://epic-kitchens.github.io/2025
+  paper: https://arxiv.org/abs/2006.13256
+  license: CC BY-NC 4.0
+  tasks:
+    - action recognition
+    - action anticipation
+    - object detection
+    - temporal action segmentation
+  modalities:
+    - rgb
+    - optical flow
+    - audio
+  hours: 100
+  subjects: 45
+  environment: kitchen
+  pov: egocentric
+  status: public
+  listed_with_permission: true
+  contact: uob-epic-kitchens@bristol.ac.uk
