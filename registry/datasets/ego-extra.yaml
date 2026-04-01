@@ -1,0 +1,29 @@
+- id: ego-extra
+  name: Ego-EXTRA
+  full_name: "Ego-EXTRA: Video-Language Egocentric Dataset for Expert-Trainee Assistance"
+  institution: University of Catania
+  url: https://fpv-iplab.github.io/Ego-EXTRA/
+  paper: https://arxiv.org/abs/2512.13238
+  venue: WACV 2026
+  tasks:
+    - visual question answering
+    - expert-trainee assistance
+    - egocentric video understanding
+  modalities:
+    - rgb
+    - audio
+    - eye gaze
+    - imu
+    - slam
+  hours: 50
+  subjects: 33
+  environment: diverse
+  scenarios:
+    - bike workshop
+    - kitchen
+    - bakery
+    - assembly
+  pov: egocentric
+  status: public
+  listed_with_permission: true
+  contributor: Antonino Furnari
