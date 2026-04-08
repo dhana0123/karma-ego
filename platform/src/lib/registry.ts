@@ -1,5 +1,5 @@
 import path from "node:path";
-import { readdir, readFile } from "node:fs/promises";
+import { readdir, readFile, access } from "node:fs/promises";
 
 export type DatasetRecord = {
   id: string;
@@ -17,6 +17,8 @@ export type DatasetRecord = {
   paperUrl: string;
   contact: string;
   publisher: string;
+  contributor: string;
+  listedWithPermission: boolean;
 };
 
 export type RegistryStats = {
@@ -29,6 +31,39 @@ export type RegistryData = {
   stats: RegistryStats;
   datasets: DatasetRecord[];
 };
+
+async function resolveDatasetsPath() {
+  const candidates = [
+    path.join(process.cwd(), "..", "registry", "datasets"),
+    path.join(process.cwd(), "registry", "datasets"),
+  ];
+
+  for (const candidate of candidates) {
+    try {
+      await access(candidate);
+      return candidate;
+    } catch {
+      // try next candidate
+    }
+  }
+
+  return candidates[0];
+}
+
+function extractNumericHoursTotal(content: string) {
+  const matches = content.matchAll(/^\s*(?:hours|volume_hours)\s*:\s*([^\n\r]+)/gm);
+  let total = 0;
+
+  for (const match of matches) {
+    const raw = match[1].trim().replace(/^["']|["']$/g, "");
+    const parsed = Number(raw);
+    if (Number.isFinite(parsed)) {
+      total += parsed;
+    }
+  }
+
+  return total;
+}
 
 function extractSingleValue(content: string, key: string) {
   const directMatch = content.match(
@@ -90,6 +125,15 @@ function normalizeDataset(fileName: string, content: string): DatasetRecord {
   const hoursParsed = Number(hoursRaw);
   const hours = Number.isFinite(hoursParsed) ? hoursParsed : null;
 
+  const listedWithPermissionRaw = extractSingleValue(
+    content,
+    "listed_with_permission",
+  ).toLowerCase();
+  const listedWithPermission =
+    listedWithPermissionRaw === "true" ||
+    listedWithPermissionRaw === "yes" ||
+    listedWithPermissionRaw === "1";
+
   return {
     id,
     name,
@@ -106,11 +150,13 @@ function normalizeDataset(fileName: string, content: string): DatasetRecord {
     paperUrl: extractSingleValue(content, "paper_url") || extractSingleValue(content, "paper"),
     contact: extractSingleValue(content, "contact"),
     publisher: extractSingleValue(content, "publisher"),
+    contributor: extractSingleValue(content, "contributor"),
+    listedWithPermission,
   };
 }
 
 export async function getRegistryData(): Promise<RegistryData> {
-  const datasetsPath = path.join(process.cwd(), "..", "registry", "datasets");
+  const datasetsPath = await resolveDatasetsPath();
   let files: string[] = [];
 
   try {
@@ -135,9 +181,7 @@ export async function getRegistryData(): Promise<RegistryData> {
     datasets.push(dataset);
 
     dataset.countries.forEach((country) => countries.add(country));
-    if (dataset.hours !== null) {
-      totalHours += dataset.hours;
-    }
+    totalHours += extractNumericHoursTotal(content);
   }
 
   return {

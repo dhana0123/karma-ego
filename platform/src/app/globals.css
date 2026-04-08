@@ -24,3 +24,34 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.supporters-marquee-shell {
+  overflow: hidden;
+  position: relative;
+}
+
+.supporters-marquee-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: supporters-marquee 42s linear infinite;
+}
+
+.supporters-marquee-shell:hover .supporters-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes supporters-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .supporters-marquee-track {
+    animation: none;
+  }
+}

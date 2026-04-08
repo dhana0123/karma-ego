@@ -1,7 +1,7 @@
 name: Bellu AI Indian Home Chores Dataset
 institution: Bellu AI Technologies
 dataset_page: https://belluai.com
-volume_hours: 20000
+volume_hours: 20
 modalities: [rgb]
 license: CC BY 4.0
 paper_url: null
