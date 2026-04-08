@@ -5,7 +5,7 @@
 
 Karma-Ego is an open registry and discovery interface for egocentric video datasets. Search, filter, compare, and access first-person video data from labs, platforms, and field deployments worldwide — via CLI or the web. One structured index. Every dataset, one command away.
 
-⚠️ Registry is actively being built. Dataset entries are being added weekly — contributions welcome.
+🚧 Currently in permissions collection phase — actively onboarding datasets with maintainer approval. Registry is live; more datasets added as permissions are confirmed.
 
 Community-maintained, open by design, and built for the pace of research.
 
