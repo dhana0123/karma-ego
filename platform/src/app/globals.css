@@ -55,3 +55,37 @@ body {
     animation: none;
   }
 }
+
+html[data-theme="dark"] body {
+  background: #14110f;
+  color: #f1e7dc;
+}
+
+html[data-theme="dark"] .bg-\[\#f8f1e7\] {
+  background-color: #14110f !important;
+}
+
+html[data-theme="dark"] .bg-\[\#fffdf8\],
+html[data-theme="dark"] .bg-\[\#fffaf3\] {
+  background-color: #221c19 !important;
+}
+
+html[data-theme="dark"] .bg-\[\#fffaf3\]\/95 {
+  background-color: rgb(34 28 25 / 95%) !important;
+}
+
+html[data-theme="dark"] .border-\[\#e8dcc8\],
+html[data-theme="dark"] .border-\[\#d7c8ae\] {
+  border-color: #4b3f37 !important;
+}
+
+html[data-theme="dark"] .text-\[\#3a2f2a\] {
+  color: #f1e7dc !important;
+}
+
+html[data-theme="dark"] .text-\[\#7a6556\],
+html[data-theme="dark"] .text-\[\#8a7462\],
+html[data-theme="dark"] .text-\[\#6c584d\],
+html[data-theme="dark"] .text-\[\#5f4a3f\] {
+  color: #cfbbab !important;
+}

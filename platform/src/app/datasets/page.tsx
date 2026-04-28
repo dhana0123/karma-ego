@@ -287,14 +287,19 @@ export default async function DatasetsPage({ searchParams }: PageProps) {
               {filteredSorted.map((dataset) => (
                 <article
                   key={dataset.id}
-                  className="rounded-xl border border-[#e8dcc8] bg-[#fffdf8] p-5"
+                  className="relative rounded-xl border border-[#e8dcc8] bg-[#fffdf8] p-5"
                 >
+                  <Link
+                    href={`/datasets/${dataset.id}`}
+                    aria-label={`Open ${dataset.name} details`}
+                    className="absolute inset-0 z-10 rounded-xl"
+                  />
                   <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                     <div>
                       <h2 className="text-lg font-medium">{dataset.name}</h2>
                       <p className="mt-1 text-sm text-[#7a6556]">{dataset.institution}</p>
                       <div className="mt-2 flex flex-wrap gap-2">
-                        <span className="inline-flex rounded-full border border-[#9f2e25] bg-[#b13a2f] px-2.5 py-1 text-xs font-medium text-white">
+                        <span className="inline-flex rounded-full border border-[#c8d3ea] bg-[#edf2ff] px-2.5 py-1 text-xs font-medium text-[#415f99]">
                           {dataset.hoursLabel}
                         </span>
                       </div>
@@ -314,7 +319,7 @@ export default async function DatasetsPage({ searchParams }: PageProps) {
                     </div>
                     <Link
                       href={`/datasets/${dataset.id}`}
-                      className="w-fit rounded-md border border-[#9f2e25] bg-[#b13a2f] px-3 py-1.5 text-sm text-white hover:bg-[#9f2e25]"
+                      className="relative z-20 w-fit rounded-md border border-[#9f2e25] bg-[#b13a2f] px-3 py-1.5 text-sm text-white hover:bg-[#9f2e25]"
                     >
                       Open details
                     </Link>

@@ -1,5 +1,5 @@
 import path from "node:path";
-import { readdir, readFile, access } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 
 export type DatasetRecord = {
   id: string;
@@ -31,24 +31,6 @@ export type RegistryData = {
   stats: RegistryStats;
   datasets: DatasetRecord[];
 };
-
-async function resolveDatasetsPath() {
-  const candidates = [
-    path.join(process.cwd(), "..", "registry", "datasets"),
-    path.join(process.cwd(), "registry", "datasets"),
-  ];
-
-  for (const candidate of candidates) {
-    try {
-      await access(candidate);
-      return candidate;
-    } catch {
-      // try next candidate
-    }
-  }
-
-  return candidates[0];
-}
 
 function extractNumericHoursTotal(content: string) {
   const matches = content.matchAll(/^\s*(?:hours|volume_hours)\s*:\s*([^\n\r]+)/gm);
@@ -156,7 +138,7 @@ function normalizeDataset(fileName: string, content: string): DatasetRecord {
 }
 
 export async function getRegistryData(): Promise<RegistryData> {
-  const datasetsPath = await resolveDatasetsPath();
+  const datasetsPath = path.join(process.cwd(), "..", "registry", "datasets");
   let files: string[] = [];
 
   try {

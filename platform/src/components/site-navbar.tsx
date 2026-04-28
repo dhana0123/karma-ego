@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ThemeToggle from "@/components/theme-toggle";
 
 export default function SiteNavbar() {
   return (
@@ -24,12 +25,15 @@ export default function SiteNavbar() {
             Contribute
           </Link>
         </div>
-        <Link
-          href="/datasets"
-          className="rounded-md border border-[#9f2e25] bg-[#b13a2f] px-3 py-1.5 text-xs text-white hover:bg-[#9f2e25] md:text-sm"
-        >
-          Search
-        </Link>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Link
+            href="/datasets"
+            className="rounded-md border border-[#9f2e25] bg-[#b13a2f] px-3 py-1.5 text-xs text-white hover:bg-[#9f2e25] md:text-sm"
+          >
+            Search
+          </Link>
+        </div>
       </div>
     </nav>
   );
