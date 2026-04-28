@@ -21,7 +21,7 @@ export default function SiteNavbar() {
           <Link href="/#timeline" className="text-sm text-[#7a6556] hover:text-[#9f2e25]">
             Timeline
           </Link>
-          <Link href="/#contribute" className="text-sm text-[#7a6556] hover:text-[#9f2e25]">
+          <Link href="/contribute" className="text-sm text-[#7a6556] hover:text-[#9f2e25]">
             Contribute
           </Link>
         </div>

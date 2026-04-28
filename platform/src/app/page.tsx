@@ -350,9 +350,17 @@ export default async function Home() {
             Contribute dataset metadata
           </h2>
           <p className="mt-3 max-w-3xl text-[#7a6556]">
-            Add a YAML file in `registry/datasets` so the community can discover
-            your dataset in a consistent schema.
+            Use the contribution form for easy submission. Approved entries are
+            reviewed and then added to the public YAML registry.
           </p>
+          <div className="mt-4">
+            <Link
+              href="/contribute"
+              className="rounded-md border border-[#9f2e25] bg-[#b13a2f] px-4 py-2 text-sm text-white hover:bg-[#9f2e25]"
+            >
+              Open contribution form
+            </Link>
+          </div>
           <pre className="mt-4 overflow-x-auto rounded-xl border border-[#e8dcc8] bg-[#fffdf8] p-4 text-sm text-[#5f4a3f]">{`name: Your Dataset Name
 institution: University / Research Lab / Company
 dataset_page: https://your-dataset-page.com
