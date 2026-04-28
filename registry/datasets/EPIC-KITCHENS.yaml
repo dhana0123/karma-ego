@@ -1,8 +1,8 @@
 - id: epic-kitchens-100
   name: EPIC-KITCHENS 100
   institution: University of Bristol
-  url: https://epic-kitchens.github.io/2022
-  dataset_page: https://epic-kitchens.github.io/2025
+  url: https://epic-kitchens.github.io/
+  dataset_page: https://epic-kitchens.github.io/
   paper: https://arxiv.org/abs/2006.13256
   license: CC BY-NC 4.0
   tasks:

@@ -60,36 +60,6 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-[#f8f1e7] text-[#3a2f2a]">
-      <nav className="sticky top-0 z-20 border-b border-[#e8dcc8] bg-[#fffaf3]/95 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3 md:px-10">
-          <Link href="/" className="text-sm font-semibold tracking-wide text-[#3a2f2a]">
-            KARMA-EGO
-          </Link>
-          <div className="hidden items-center gap-4 md:flex">
-            <a href="#supporters" className="text-sm text-[#7a6556] hover:text-[#9f2e25]">
-              Supporters
-            </a>
-            <a href="#workflow" className="text-sm text-[#7a6556] hover:text-[#9f2e25]">
-              Workflow
-            </a>
-            <a href="#featured" className="text-sm text-[#7a6556] hover:text-[#9f2e25]">
-              Datasets
-            </a>
-            <a href="#timeline" className="text-sm text-[#7a6556] hover:text-[#9f2e25]">
-              Timeline
-            </a>
-            <a href="#contribute" className="text-sm text-[#7a6556] hover:text-[#9f2e25]">
-              Contribute
-            </a>
-          </div>
-          <Link
-            href="/datasets"
-            className="rounded-md border border-[#9f2e25] bg-[#b13a2f] px-3 py-1.5 text-xs text-white hover:bg-[#9f2e25] md:text-sm"
-          >
-            Search
-          </Link>
-        </div>
-      </nav>
       <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-20 md:px-10">
         <div className="max-w-4xl">
           <span className="inline-flex rounded-full border border-[#e8dcc8] bg-[#fffaf3] px-3 py-1 text-xs tracking-wide text-[#7a6556]">

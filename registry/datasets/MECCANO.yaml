@@ -1,7 +1,7 @@
 name: MECCANO Multimodal Egocentric Dataset
 institution: University of Catania / Next Vision
 dataset_page: https://iplab.dmi.unict.it/MECCANO/
-volume_hours: unknown
+volume_hours: 6.96
 modalities: [rgb, depth, gaze]
 license: Academic use
 paper_url: https://doi.org/10.1016/j.cviu.2023.103764

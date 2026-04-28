@@ -105,29 +105,16 @@ export default async function DatasetsPage({ searchParams }: PageProps) {
     }
     return a.name.localeCompare(b.name);
   });
+  const filteredTotalHours = filteredSorted.reduce(
+    (sum, dataset) => sum + (dataset.hours ?? 0),
+    0,
+  );
 
   return (
     <main className="min-h-screen bg-[#f8f1e7] text-[#3a2f2a]">
       <section className="mx-auto w-full max-w-6xl px-6 py-14 md:px-10">
-        <div className="mb-8 flex items-center justify-between gap-3">
-          <div>
-            <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              Search and filter datasets
-            </h1>
-            <p className="mt-2 text-[#7a6556]">
-              Find egocentric datasets by task, modality, country, and keywords.
-            </p>
-          </div>
-          <Link
-            href="/"
-            className="rounded-md border border-[#d7c8ae] bg-[#fffaf3] px-3 py-1.5 text-sm text-[#6c584d] hover:bg-[#f6ecde]"
-          >
-            Back to landing
-          </Link>
-        </div>
-
         <div className="mt-2 grid gap-6 lg:grid-cols-[280px_1fr]">
-          <aside className="h-fit rounded-xl border border-[#e8dcc8] bg-[#fffaf3] p-4 lg:sticky lg:top-6">
+          <aside className="h-fit rounded-xl border border-[#e8dcc8] bg-[#fffaf3] p-4 lg:sticky lg:top-20">
             <form className="grid gap-3">
               <div>
                 <label className="mb-1 block text-xs uppercase tracking-wide text-[#8a7462]">
@@ -287,9 +274,14 @@ export default async function DatasetsPage({ searchParams }: PageProps) {
           </aside>
 
           <section>
-            <p className="text-sm text-[#7a6556]">
-              {filteredSorted.length} dataset(s) found
-            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="inline-flex rounded-full border border-[#e8dcc8] bg-[#fffaf3] px-3 py-1 text-xs font-medium text-[#7a6556]">
+                {filteredSorted.length} dataset(s) found
+              </span>
+              <span className="inline-flex rounded-full border border-[#9f2e25] bg-[#b13a2f] px-3 py-1 text-xs font-medium text-white">
+                {filteredTotalHours.toLocaleString()} total hours
+              </span>
+            </div>
 
             <div className="mt-4 grid gap-3">
               {filteredSorted.map((dataset) => (
@@ -300,11 +292,19 @@ export default async function DatasetsPage({ searchParams }: PageProps) {
                   <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                     <div>
                       <h2 className="text-lg font-medium">{dataset.name}</h2>
+                      <p className="mt-1 text-sm text-[#7a6556]">{dataset.institution}</p>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        <span className="inline-flex rounded-full border border-[#9f2e25] bg-[#b13a2f] px-2.5 py-1 text-xs font-medium text-white">
+                          {dataset.hoursLabel}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-[#7a6556]">{dataset.country}</p>
+                      {dataset.contributor && (
+                        <p className="mt-1 text-sm text-[#7a6556]">
+                          Contributor: {dataset.contributor}
+                        </p>
+                      )}
                       <p className="mt-1 text-sm text-[#7a6556]">
-                        {dataset.institution} · {dataset.country} ·{" "}
-                        {dataset.hoursLabel}
-                      </p>
-                      <p className="mt-2 text-sm text-[#7a6556]">
                         Tasks: {dataset.tasks.join(", ") || "not specified"}
                       </p>
                       <p className="text-sm text-[#7a6556]">
